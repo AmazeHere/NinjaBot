@@ -21,12 +21,12 @@ async def on_message(message):
         await message.channel.send("🍪")
         
     if message.content.startswith('se'):
-        await message.channel.send(sex)
+        await message.channel.send("sex")
         
     if 'kiss' in message.content:
         print(f'\033[1;33;40m react to {message.author} with moyai')
-        await message.add_reaction(kissing_cat)
-)
+        await message.add_reaction("😽")
+
 
 @bot.command()
 async def ping(ctx):
