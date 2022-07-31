@@ -28,7 +28,6 @@ async def on_message(message):
         await message.add_reaction(kissing_cat)
 )
 
-
 @bot.command()
 async def ping(ctx):
     await ctx.send(f'Pong! {round(bot.latency * 1000)}ms')
