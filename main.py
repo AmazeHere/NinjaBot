@@ -23,7 +23,7 @@ async def on_message(message):
     if message.content.startswith('se'):
         await message.channel.send("sex")
         
-    if message.contant.startswith('free'): 
+    if message.content.startswith('free'): 
         await message.channel.send('`https://youtu.be/xvFZjo5PgG0`')
         
     if 'kiss' in message.content:
