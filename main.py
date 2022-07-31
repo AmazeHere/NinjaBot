@@ -3,27 +3,27 @@ from discord.ext import commands
 import asyncio
 import time
 
-client = commands.Bot(command_prefix = ">")
+bot = commands.Bot(command_prefix = ">",intents=discord.Intents.all()) #i use 2.0 so intents are needed
 
-cookie = '\N{COOKIE}'
 
-@client.event
+
+@bot.event
 async def on_ready():
     print("this sexy bot has been connected to discord")
     
-@client.event
+@bot.listen()
 async def on_message(message):
     print(f'\033[1;36;40m {message.author}: {message.content}') #this line print the whole chat cuz ez message logger heheha
-    if message.author == client.user:
+    if message.author == bot.user:
         return
 
     if message.content.startswith('cookie'):
-        await message.channel.send(cookie)
+        await message.channel.send("🍪")
 
-    await client.process_commands(message)
+    
 
-@client.command()
+@bot.command()
 async def ping(ctx):
-    await ctx.send(f'Pong! {round(client.latency * 1000)}ms')
+    await ctx.send(f'Pong! {round(bot.latency * 1000)}ms')
 
-client.run("OTk0NjIxMjg3Mjg2NzE4NTA0.G5iJbP.bSWeqPsVkevDttpOUEbvakLygrsukxcpsVhuzY")
+bot.run("OTk0NjIxMjg3Mjg2NzE4NTA0.G5iJbP.bSWeqPsVkevDttpOUEbvakLygrsukxcpsVhuzY")
