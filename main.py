@@ -19,7 +19,7 @@ async def on_message(message):
     if message.author == client.user:
         return
 
-@Bot.command
+@client.command
 async def ping(ctx):
      await ctx.send(f'your ping is {round(client.latency)}ms')
 
