@@ -24,6 +24,6 @@ async def on_message(message):
 
 @client.command()
 async def ping(ctx):
-    await ctx.send('Pong! {0}'.format(round(client.latency, 1)))
+    await ctx.send(f'Pong! {round(client.latency * 1000)}ms')
 
 client.run("OTk0NjIxMjg3Mjg2NzE4NTA0.G5iJbP.bSWeqPsVkevDttpOUEbvakLygrsukxcpsVhuzY")
