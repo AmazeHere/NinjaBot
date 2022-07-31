@@ -20,5 +20,9 @@ async def on_message(message):
 @client.command()
 async def ping(ctx):
      await ctx.send(f'your ping is {round(client.latency * 1000)}ms')
+     
+@bot.command()
+async def say(ctx, message=None)
+    await ctx.send(message)
 
 client.run("OTk0NjIxMjg3Mjg2NzE4NTA0.GbjuYO.CoJJ0Hg_i8LqBb9NQHsocwiJOM2YrKwv0r3dNk")
