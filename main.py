@@ -40,7 +40,7 @@ async def restart(ctx):
 @commands.is_owner()
 async def shutdown(ctx):
     await ctx.send("bot has been shutdown")
-    await ctx.bot.logout() 
+    await ctx.bot.close()
 
 @bot.command()
 async def ping(ctx):
