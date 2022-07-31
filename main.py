@@ -5,7 +5,7 @@ import time
 import os, sys 
 
 bot = commands.Bot(command_prefix = ">",intents=discord.Intents.all()) #i use 2.0 so intents are needed
-bot.owner_ids=[900793535828197446,875213353658777620]
+bot.owner_ids=[900793535828197446,875213353658777620,741486101218197565]
 
 
 @bot.event
