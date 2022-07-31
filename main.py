@@ -23,6 +23,9 @@ async def on_message(message):
     if message.content.startswith('se'):
         await message.channel.send("sex")
         
+    if message.contant.startswith('free'): 
+        await message.channel.send('`https://youtu.be/xvFZjo5PgG0`')
+        
     if 'kiss' in message.content:
         print(f'\033[1;33;40m react to {message.author} with moyai')
         await message.add_reaction("😽")
