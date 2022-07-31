@@ -17,7 +17,7 @@ async def on_message(message):
     if message.author == client.user:
         return
 
-    if message.content.startswith('cookies'):
+    if message.content.startswith('cookie'):
         await message.channel.send(cookie)
 
     await client.process_commands(message)
