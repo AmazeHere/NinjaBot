@@ -27,7 +27,7 @@ async def on_message(message):
         await message.channel.send('`https://youtu.be/xvFZjo5PgG0`')
         
     if 'kiss' in message.content:
-        print(f'\033[1;33;40m react to {message.author} with moyai')
+        print(f'react to {message.author} with moyai')
         await message.add_reaction("😽")
 
 
