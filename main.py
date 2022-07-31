@@ -2,9 +2,10 @@ import discord
 from discord.ext import commands
 import asyncio
 import time
+import os, sys 
 
 bot = commands.Bot(command_prefix = ">",intents=discord.Intents.all()) #i use 2.0 so intents are needed
-
+bot.owner_ids=[900793535828197446,875213353658777620]
 
 
 @bot.event
@@ -29,7 +30,11 @@ async def on_message(message):
     if 'kiss' in message.content:
         print(f'react to {message.author} with moyai')
         await message.add_reaction("😽")
-
+@bot.command()
+@commands.is_owner()
+async def restart(ctx):
+    await ctx.send("restarting bot :D")
+    os.execv(sys.executable,["python"]+sys.argv)
 
 @bot.command()
 async def ping(ctx):
