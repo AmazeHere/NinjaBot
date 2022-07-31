@@ -20,7 +20,7 @@ async def on_message(message):
     if message.content.startswith('cookie'):
         await message.channel.send("🍪")
         
-    if message.content.startswith('se')
+    if message.content.startswith('se'):
         await message.channel.send(sex)
 
 @bot.command()
