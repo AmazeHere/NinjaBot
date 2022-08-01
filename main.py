@@ -31,13 +31,13 @@ async def on_message(message):
         print(f'react to {message.author} with moyai')
         await message.add_reaction("😽")
 
-@bot.command(pass_context=True) #idk if u want this but there u go i fixed the owner only thing 
+@bot.command() # bro pass_context is for ancient coders that lives in a cave
 @commands.is_owner()
 async def restart(ctx):
     await ctx.send("restarting bot :D")
     os.execv(sys.executable,["python"]+sys.argv)
     
-@bot.command(pass_context=True) #fixed :) 
+@bot.command() # pass_context is removed on dpy 1.0.0
 @commands.is_owner()
 async def shutdown(ctx):
     await ctx.send("bot has been shutdown")
