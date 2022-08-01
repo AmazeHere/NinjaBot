@@ -38,7 +38,7 @@ async def on_message(message):
         await message.add_reaction("😽")
         
     if 'dick' in message.content:
-        print(f'react to {message.auther}')
+        print(f'react to {message.author}')
         await message.add_reaction("🍆")
 
 @bot.command() # bro pass_context is for ancient coders that lives in a cave
