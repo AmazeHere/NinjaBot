@@ -14,7 +14,7 @@ async def on_ready():
     
 @bot.listen()
 async def on_message(message):
-    print(f'\033[1;36;40m {message.author}: {message.content}') #this line print the whole chat cuz ez message logger heheha
+    print(f'\033[1;36;40m {message.author}: {message.content}')
     if message.author == bot.user:
         return
         
@@ -30,24 +30,24 @@ async def on_message(message):
     if message.content.startswith('coc'):
         await message.channel.send('🐔')
         
-    if message.content.startswith('77+33'):
+    if message.content.startswith('77+33' or '33+77'):
         await message.channel.send('100')
         
     if 'kiss' in message.content:
-        print(f'react to {message.author} with moyai')
+        print(f'react to {message.author}')
         await message.add_reaction("😽")
         
     if 'dick' in message.content:
         print(f'react to {message.author}')
         await message.add_reaction("🍆")
 
-@bot.command() # bro pass_context is for ancient coders that lives in a cave
+@bot.command()
 @commands.is_owner()
 async def restart(ctx):
     await ctx.send("restarting bot :D")
     os.execv(sys.executable,["python"]+sys.argv)
     
-@bot.command() # pass_context is removed on dpy 1.0.0
+@bot.command()
 @commands.is_owner()
 async def shutdown(ctx):
     await ctx.send("bot has been shutdown")
