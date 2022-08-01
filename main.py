@@ -49,5 +49,7 @@ async def shutdown(ctx):
 @bot.command()
 async def ping(ctx):
     await ctx.send(f'Pong! {round(bot.latency * 1000)}ms')
-
+@bot.command()
+async def say(ctx,*,words):
+    await ctx.send(f"{words}")
 bot.run("OTk0NjIxMjg3Mjg2NzE4NTA0.G5iJbP.bSWeqPsVkevDttpOUEbvakLygrsukxcpsVhuzY")
