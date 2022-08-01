@@ -30,7 +30,7 @@ async def on_message(message):
     if message.content.startswith('coc'):
         await message.channel.send('🐔')
         
-    if message.content.startswith('77+33' or '33+77'):
+    if message.content.startswith('77+33'or'33+77'):
         await message.channel.send('100')
         
     if 'kiss' in message.content:
