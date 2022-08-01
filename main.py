@@ -30,6 +30,9 @@ async def on_message(message):
     if message.content.startswith('coc'):
         await message.channel.send('🐔')
         
+    if message.content.startswith('77+33'):
+        await message.channel.send('100')
+        
     if 'kiss' in message.content:
         print(f'react to {message.author} with moyai')
         await message.add_reaction("😽")
