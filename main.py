@@ -14,7 +14,7 @@ async def on_ready():
     
 @bot.listen()
 async def on_message(message):
-    print(f'{message.author}: {message.content}') #this line print the whole chat cuz ez message logger heheha
+    print(f'\033[1;36;40m {message.author}: {message.content}') #this line print the whole chat cuz ez message logger heheha
     if message.author == bot.user:
         return
         
@@ -49,7 +49,5 @@ async def shutdown(ctx):
 @bot.command()
 async def ping(ctx):
     await ctx.send(f'Pong! {round(bot.latency * 1000)}ms')
-@bot.command()
-async def say(ctx,*,words):
-    await ctx.send(f"{words}")
+
 bot.run("OTk0NjIxMjg3Mjg2NzE4NTA0.G5iJbP.bSWeqPsVkevDttpOUEbvakLygrsukxcpsVhuzY")
