@@ -36,6 +36,10 @@ async def on_message(message):
     if 'kiss' in message.content:
         print(f'react to {message.author} with moyai')
         await message.add_reaction("😽")
+        
+    if 'dick' in message.content:
+        print(f'react to {message.auther})'
+        await message.add_reaction("🍆")
 
 @bot.command() # bro pass_context is for ancient coders that lives in a cave
 @commands.is_owner()
