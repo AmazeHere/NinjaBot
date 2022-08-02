@@ -10,7 +10,7 @@ bot.owner_ids=[900793535828197446,875213353658777620]
 
 @bot.event
 async def on_ready():
-    print('bot has been connected to discord:D')
+    print('bot has been connected to discord   :D')
     
 @bot.listen()
 async def on_message(message):
