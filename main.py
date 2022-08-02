@@ -21,9 +21,6 @@ async def on_message(message):
     if message.content.startswith('cookie'):
         await message.channel.send("🍪")
         
-    if message.content.startswith('sex'):
-        await message.channel.send("sex")
-        
     if message.content.startswith('free'): 
         await message.channel.send('<https://youtu.be/xvFZjo5PgG0>')
         
