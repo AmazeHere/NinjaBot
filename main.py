@@ -1,7 +1,6 @@
 import discord
 from discord.ext import commands
-import asyncio
-import time
+import responses
 import os
 import sys
 
@@ -21,8 +20,7 @@ async def on_message(message):
     if message.author == bot.user:
         return
 
-    if message.content.startswith('cookie'):
-        await message.channel.send("🍪")
+    await responses.cookie(message)
 
     if message.content.startswith('free'):
         await message.channel.send('<https://youtu.be/xvFZjo5PgG0>')
