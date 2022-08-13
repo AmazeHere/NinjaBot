@@ -28,3 +28,9 @@ async def responses(message):
     if 'onix' in message.content:
         print(f'react to {message.author}')
         await message.add_reaction("🤡")
+
+# for amaze
+# moving all the responses to their own file makes it easier to manage
+# if you dont like it, you can revert EVERYTHING with this command:
+# git revert --no-commit d646d34bc0a232581dc0126163c7a5aa84ec0a01..HEAD
+# you can view how it originally looked and then commit it

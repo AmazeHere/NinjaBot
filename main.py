@@ -20,6 +20,7 @@ async def on_message(message):
     if message.author == bot.user:
         return
 
+    # one line for all responses in main.py!
     await responses.responses(message)
 
 
