@@ -26,5 +26,5 @@ async def responses(message):
         await message.add_reaction("🍆")
 
     if 'onix' in message.content:
-        print(f'react to {message.auther}')
+        print(f'react to {message.author}')
         await message.add_reaction("🤡")
