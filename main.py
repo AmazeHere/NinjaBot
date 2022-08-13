@@ -43,6 +43,10 @@ async def on_message(message):
     if 'dick' in message.content:
         print(f'react to {message.author}')
         await message.add_reaction("🍆")
+    
+    if 'onix' in message.content:
+        print(f'react to {message.auther}')
+        await message.add_reaction("🤡")
 
 @bot.command()
 @commands.is_owner()
