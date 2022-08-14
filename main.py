@@ -3,6 +3,8 @@ from discord.ext import commands
 import responses
 import os
 import sys
+import time
+
 
 # i use 2.0 so intents are needed
 bot = commands.Bot(command_prefix=">", intents=discord.Intents.all())
@@ -40,6 +42,10 @@ async def shutdown(ctx):
 
 @bot.command()
 async def ping(ctx):
-    await ctx.send(f'Pong! {round(bot.latency * 1000)}ms')
+    start=time.perf_counter()
+    msg = await ctx.send("Latency: ...ms\nWebsocket: ...ms")
+    end=time.perf_counter()
+    duration=(end-start)*1000
+    await msg.edit(content=f"Latency: {duration:.2f}ms\nWebsocket: {bot.latency*1000:.2f}ms")
 
 bot.run("OTk0NjIxMjg3Mjg2NzE4NTA0.G5iJbP.bSWeqPsVkevDttpOUEbvakLygrsukxcpsVhuzY")
