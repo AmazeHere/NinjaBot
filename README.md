@@ -1,3 +1,3 @@
 # NinjaBot
 trying to make a bot 
-## Join this for testing shit
+## Join our [discord](https://discord.gg/aSkhkFMFRC) for testing shit 
