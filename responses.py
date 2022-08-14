@@ -25,9 +25,10 @@ async def responses(message):
         print(f'react to {message.author}')
         await message.add_reaction("🍆")
 
-    if 'onix' in message.content:
+    if 'onix' in message.content or "jams" in message.content:
         print(f'react to {message.author}')
         await message.add_reaction("🤡")
+    
 
 # for amaze
 # moving all the responses to their own file makes it easier to manage
