@@ -4,14 +4,45 @@ import responses
 import os
 import sys
 import time
-import threading, time
+import asyncio
+import logging
+import sqlite3
+from discord.utils import setup_logging
+
+
+schema=\
+"""CREATE TABLE IF NOT EXISTS mutes(
+user INTEGER PRIMARY KEY UNIQUE NOT NULL,
+time REAL);
+"""
+
+log=logging.getLogger("Ninja")
+#later ima use logging
+
+class Ninja(commands.Bot):
+    def __init__(self):
+        super().__init__(command_prefix=">", intents=discord.Intents.all())
+        self.db=sqlite3.connect("bot.db")
+        self.cursor=self.db.cursor()
+    async def setup_hook(self):
+        "Do something here like cog loading"
+        # await self.load_extension("cogs.moderation")
+        log.info('bot has been connected to discord :D')
+        self.cursor.execute(schema)
+    
+    async def on_command_error(self, ctx, error):
+        em = discord.Embed(description=f"**An error occured!**\n```py\n{error}```", color=discord.Color.red())
+        await ctx.send(embed=em)
+        log.error("Command %s raised an error:\n" % ctx.invoked_with, exc_info=error)
+        
+
 
 # i use 2.0 so intents are needed
-bot = commands.Bot(command_prefix=">", intents=discord.Intents.all())
+bot = Ninja()
 bot.owner_ids = [900793535828197446, 875213353658777620, 741486101218197565]
 
 
-@bot.event
+# @bot.event bloat
 async def on_ready():
     print('bot has been connected to discord :D')
 
@@ -46,7 +77,24 @@ async def ping(ctx):
     await msg.edit(content=f"Latency: {duration:.2f}ms\nWebsocket: {bot.latency*1000:.2f}ms")
     
 @bot.command()
-async def say(ctx, message=None):
+async def say(ctx,*, message=None):
     await ctx.send(message)
-    
-bot.run("OTk0NjIxMjg3Mjg2NzE4NTA0.G5iJbP.bSWeqPsVkevDttpOUEbvakLygrsukxcpsVhuzY")
+
+
+# loop=asyncio.get_event_loop()
+
+
+async def main ():
+    async with bot:
+        setup_logging()
+        await bot.start("OTk0NjIxMjg3Mjg2NzE4NTA0.G5iJbP.bSWeqPsVkevDttpOUEbvakLygrsukxcpsVhuzY")
+
+
+
+asyncio.run(main())
+
+
+# bot.run("OTk0NjIxMjg3Mjg2NzE4NTA0.G5iJbP.bSWeqPsVkevDttpOUEbvakLygrsukxcpsVhuzY")
+
+
+
