@@ -25,37 +25,17 @@ async def on_message(message):
     # one line for all responses in main.py!
     await responses.responses(message)
 
-def waitfor():
-    cmd = input('command: ')
-    print(cmd)
-    ## do command processing here eg. eval(cmd)
-
-def runthread():
-    t = threading.Thread(target=waitfor)
-    t.start()
-    return t
-
-async def commandInterface():
-    t = runthread()
-    while 1:
-        if not t.is_alive():
-            t = runthread()
-        time.sleep(1)
-        ## loop stuff
-
 @bot.command()
 @commands.is_owner()
 async def restart(ctx):
     await ctx.send("restarting bot :D")
     os.execv(sys.executable, ["python"]+sys.argv)
 
-
 @bot.command()
 @commands.is_owner()
 async def shutdown(ctx):
     await ctx.send("bot has been shutdown")
     await ctx.bot.close()
-
 
 @bot.command()
 async def ping(ctx):
@@ -69,5 +49,4 @@ async def ping(ctx):
 async def say(ctx, message=None):
     await ctx.send(message)
     
-
 bot.run("OTk0NjIxMjg3Mjg2NzE4NTA0.G5iJbP.bSWeqPsVkevDttpOUEbvakLygrsukxcpsVhuzY")
