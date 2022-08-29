@@ -121,22 +121,26 @@ class Moderation(commands.Cog):
                         datetime.datetime.timestamp(datetime.datetime.utcnow() + datetime.timedelta(seconds=seconds))
                     ]
                 )
+                self.bot.cursor.execute("INSERT INTO mutes(user,time) VALUES(?,?)",(member.id,datetime.datetime.timestamp(datetime.datetime.utcnow() + datetime.timedelta(seconds=seconds))))
+                self.bot.db.commit()
                 with open("temptasks.json", "w") as f:
                     json.dump(data, f, indent=4)
 
 
-    @commands.Cog.listener("on_ready")
-    async def onReady(self):
+#    @commands.Cog.listener("on_ready")
+    async def cog_load(self):
         print("cogs.Moderation is now loaded.")
 
-    @commands.Cog.listener()
+#    @commands.Cog.listener()
+# Moved this thing to main
     async def on_command_error(self, ctx, error):
         em = discord.Embed(description=f"**An error occured!**\n```py\n{error}```", color=discord.Color.red())
         await ctx.send(embed=em)
         print('Ignoring exception in command {}:'.format(ctx.command), file=sys.stderr)
         traceback.print_exception(type(error), error, error.__traceback__, file=sys.stderr)
 
-    @commands.Cog.listener()
+#    @commands.Cog.listener()
+# already existing in main
     async def on_message(self, message: discord.Message):
         from responses import responses
         await responses(message)
