@@ -1,55 +1,94 @@
-import asyncio
-import json
+import discord
+from discord.ext import commands
+import responses
 import os
 import sys
-import traceback
-import discord 
-from discord.ext import commands
+import time
+import asyncio
+import logging
+import sqlite3
+from discord.utils import setup_logging
 
-class Bot(commands.Bot):
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-    
+
+schema=\
+"""CREATE TABLE IF NOT EXISTS mutes(
+user INTEGER PRIMARY KEY UNIQUE NOT NULL,
+time REAL);
+"""
+
+log=logging.getLogger("Ninja")
+#later ima use logging
+
+class Ninja(commands.Bot):
+    def __init__(self):
+        super().__init__(command_prefix=">", intents=discord.Intents.all())
+        self.db=sqlite3.connect("bot.db")
+        self.cursor=self.db.cursor()
     async def setup_hook(self):
-        pass
+        "Do something here like cog loading"
+        # await self.load_extension("cogs.moderation")
+        log.info('bot has been connected to discord :D')
+        self.cursor.execute(schema)
     
-bot = Bot(
-    command_prefix=">",
-    intents=discord.Intents().all(),
-    owner_ids=[900793535828197446, 875213353658777620, 741486101218197565, 958390293760184392],
-    case_insensitive=True,
-    status=discord.Status.dnd,
-    activity=discord.Activity(type=discord.ActivityType.watching, name="Onix play with himself cuz lonely")
-)
-
-async def main():
-    for cog in os.listdir("./cogs"):
-        try:
-            await bot.load_extension("cogs."+cog[:-3])
-        except Exception as e:
-            print(f"Error Loading {cog}", file=sys.stderr)
-            traceback.print_exc()
-        # await bot.load_extension("jishaku")
-    print("Logging in...")
-    await bot.load_extension('jishaku')
-    with open("config.json", "r") as f:
-        data = json.load(f)
-    async with bot:
-        await bot.start(data['TOKEN'])
+    async def on_command_error(self, ctx, error):
+        em = discord.Embed(description=f"**An error occured!**\n```py\n{error}```", color=discord.Color.red())
+        await ctx.send(embed=em)
+        log.error("Command %s raised an error:\n" % ctx.invoked_with, exc_info=error)
         
-@bot.event
-async def on_command_error(ctx, error):
-  await ctx.send(f"Error lmao, \ 
-py\n{error}`")
-`
 
-@bot.event
+
+# i use 2.0 so intents are needed
+bot = Ninja()
+bot.owner_ids = [900793535828197446, 875213353658777620, 741486101218197565]
+
+
+# @bot.event bloat
 async def on_ready():
-    print("======================================")
-    print(f"Logged in")
-    print(f"Bot Name: {bot.user}")
-    print(f"Bot ID: {bot.user.id}")
-    print("======================================")
+    print('bot has been connected to discord :D')
+
+
+@bot.listen()
+async def on_message(message):
+    print(f'\033[1;36;40m {message.author}: {message.content}')
+    if message.author == bot.user:
+        return
+
+    # one line for all responses in main.py!
+    await responses.responses(message)
+
+@bot.command()
+@commands.is_owner()
+async def restart(ctx):
+    await ctx.send("restarting bot :D")
+    os.execv(sys.executable, ["python"]+sys.argv)
+
+@bot.command()
+@commands.is_owner()
+async def shutdown(ctx):
+    await ctx.send("bot has been shutdown")
+    await ctx.bot.close()
+
+@bot.command()
+async def ping(ctx):
+    start=time.perf_counter()
+    msg = await ctx.send("Latency: ...ms\nWebsocket: ...ms")
+    end=time.perf_counter()
+    duration=(end-start)*1000
+    await msg.edit(content=f"Latency: {duration:.2f}ms\nWebsocket: {bot.latency*1000:.2f}ms")
+    
+@bot.command()
+async def say(ctx,*, message=None):
+    await ctx.send(message)
+
+
+# loop=asyncio.get_event_loop()
+
+
+async def main ():
+    async with bot:
+        setup_logging()
+        await bot.start("OTk0NjIxMjg3Mjg2NzE4NTA0.G5iJbP.bSWeqPsVkevDttpOUEbvakLygrsukxcpsVhuzY")
+
 
 
 asyncio.run(main())
