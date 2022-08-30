@@ -42,7 +42,7 @@ class Ninja(commands.Bot):
 
 # i use 2.0 so intents are needed
 bot = Ninja()
-bot.owner_ids = [900793535828197446, 875213353658777620, 741486101218197565]
+bot.owner_ids = [900793535828197446,958390293760184392,875213353658777620]
 
 
 # @bot.event bloat
@@ -97,15 +97,17 @@ async def uptime(ctx):
         except discord.HTTPException:
             await ctx.send("Current uptime: " + text)
 
-@bot.command()
-async def exec(ctx, *, code):
-    str_obj = io.StringIO() 
+@bot.command(aliases=['exec'])
+@commands.is_owner()
+async def eval(ctx, *, code):
+
+    str_obj = io.StringIO() #Retrieves a stream of data
     try:
         with contextlib.redirect_stdout(str_obj):
             exec(code)
     except Exception as e:
         return await ctx.send(f"```{e.__class__.__name__}: {e}```")
-    await ctx.send(f'```{str_obj.getvalue()}```')
+    await ctx.send(f'{str_obj.getvalue()}')
     
 # loop=asyncio.get_event_loop()
 
