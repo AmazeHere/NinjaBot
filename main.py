@@ -8,6 +8,9 @@ import asyncio
 import logging
 import sqlite3
 from discord.utils import setup_logging
+import datetime, time
+import contextlib
+import io
 
 
 schema=\
@@ -21,7 +24,7 @@ log=logging.getLogger("Ninja")
 
 class Ninja(commands.Bot):
     def __init__(self):
-        super().__init__(command_prefix=">", intents=discord.Intents.all())
+        super().__init__(command_prefix="?", intents=discord.Intents.all())
         self.db=sqlite3.connect("bot.db")
         self.cursor=self.db.cursor()
     async def setup_hook(self):
@@ -46,6 +49,7 @@ bot.owner_ids = [900793535828197446, 875213353658777620, 741486101218197565]
 async def on_ready():
     print('bot has been connected to discord :D')
 
+start_time = time.time()
 
 @bot.listen()
 async def on_message(message):
@@ -65,7 +69,7 @@ async def restart(ctx):
 @bot.command()
 @commands.is_owner()
 async def shutdown(ctx):
-    await ctx.send("bot has been shutdown")
+    await ctx.send("bot has been shutdown D:")
     await ctx.bot.close()
 
 @bot.command()
@@ -79,8 +83,30 @@ async def ping(ctx):
 @bot.command()
 async def say(ctx,*, message=None):
     await ctx.send(message)
+    
+    
+@bot.command(pass_context=True)
+async def uptime(ctx):
+        current_time = time.time()
+        difference = int(round(current_time - start_time))
+        text = str(datetime.timedelta(seconds=difference))
+        embed = discord.Embed(colour=0xc8dc6c)
+        embed.add_field(name="Uptime", value=text)
+        try:
+            await ctx.send(embed=embed)
+        except discord.HTTPException:
+            await ctx.send("Current uptime: " + text)
 
-
+@bot.command()
+async def exec(ctx, *, code):
+    str_obj = io.StringIO() 
+    try:
+        with contextlib.redirect_stdout(str_obj):
+            exec(code)
+    except Exception as e:
+        return await ctx.send(f"```{e.__class__.__name__}: {e}```")
+    await ctx.send(f'```{str_obj.getvalue()}```')
+    
 # loop=asyncio.get_event_loop()
 
 
@@ -88,7 +114,6 @@ async def main ():
     async with bot:
         setup_logging()
         await bot.start("OTk0NjIxMjg3Mjg2NzE4NTA0.G5iJbP.bSWeqPsVkevDttpOUEbvakLygrsukxcpsVhuzY")
-
 
 
 asyncio.run(main())
