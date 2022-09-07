@@ -97,9 +97,9 @@ async def uptime(ctx):
         except discord.HTTPException:
             await ctx.send("Current uptime: " + text)
 
-@bot.command()
+@bot.command(name="exec",aliases=["eval"])
 @commands.is_owner()
-async def exec(ctx, *, code):
+async def _exec(ctx, *, code):
 
     str_obj = io.StringIO() #Retrieves a stream of data
     try:
