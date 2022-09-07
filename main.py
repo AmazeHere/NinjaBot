@@ -97,7 +97,7 @@ async def uptime(ctx):
         except discord.HTTPException:
             await ctx.send("Current uptime: " + text)
 
-@bot.command(aliases=['exec'])
+@bot.command()
 @commands.is_owner()
 async def exec(ctx, *, code):
 
