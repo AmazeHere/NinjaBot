@@ -99,7 +99,7 @@ async def uptime(ctx):
 
 @bot.command(aliases=['exec'])
 @commands.is_owner()
-async def eval(ctx, *, code):
+async def exec(ctx, *, code):
 
     str_obj = io.StringIO() #Retrieves a stream of data
     try:
