@@ -44,7 +44,10 @@ class Ninja(commands.Bot):
     start_time: typing.ClassVar[int]
     def __init__(self) -> None:
         super().__init__(command_prefix="?",
-                         intents=discord.Intents.all())
+                         intents=discord.Intents.all(),
+                         case_insensitive=True,
+                         strip_after_prefix=True,
+                         allowed_mentions=discord.AllowedMentions(everyone=False,roles=False))
         self.db: sqlite3.Connection = sqlite3.connect("bot.db")
         self.cur: sqlite3.Cursor = self.db.cursor()
       
