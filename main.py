@@ -14,7 +14,7 @@ from discord.ext import commands
 from discord.utils import setup_logging
 import discord
 import responses
-
+from textwrap import indent
 
 SQL_SCHEMA: str = \
 """CREATE TABLE IF NOT EXISTS mutes(
@@ -122,7 +122,35 @@ async def _exec(ctx: commands.Context, *, code: CodeBlock) -> None:
     str_obj = io.StringIO() #Retrieves a stream of data
     try:
         with contextlib.redirect_stdout(str_obj):
-            exec(code)
+            function="async def func():\n"+indent(code,"    ")
+            
+            env={
+            "asyncio":asyncio,
+            "ctx":ctx,
+            "bot":bot,
+            "message":ctx.message,
+            "author":ctx.author,
+            "guild":ctx.guild,
+            "channel":ctx.channel,
+            "db": bot.db,
+            "cur":bot.cur,
+            "discord":discord,
+            "commands":commands,
+            "utils":discord.utils,
+            "ui":discord.ui,
+            "btnstyles":discord.ButtonStyle,
+            "os":os,
+            "io":io,
+            "sys":sys
+            }
+            if ctx.message.reference and isinstance(ctx.message.reference.resolved,discord.Message):
+                env["ref"]=ctx.message.reference.resolved
+            else:
+                env["ref"]=None
+        
+            env.update(globals())
+            exec(function,env)
+            await env["func"]()
     except Exception as e:
         return await ctx.send(f"```{e.__class__.__name__}: {e}```")
     await ctx.send(f'{str_obj.getvalue()}')
