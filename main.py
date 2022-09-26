@@ -10,13 +10,9 @@ import datetime
 import typing
 import time
 import re
-
-
 from discord.ext import commands
 from discord.utils import setup_logging
 import discord
-
-
 import responses
 
 
