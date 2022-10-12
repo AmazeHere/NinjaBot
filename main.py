@@ -6,15 +6,17 @@ import sys
 import sqlite3
 import asyncio
 import logging 
-import datetime
 import typing
 import time
 import re
+import math
 from discord.ext import commands
 from discord.utils import setup_logging
 import discord
 import responses
 from textwrap import indent
+import datetime
+datetime.datetime.utcnow()
 
 SQL_SCHEMA: str = \
 """CREATE TABLE IF NOT EXISTS mutes(
@@ -113,7 +115,44 @@ async def uptime(ctx: commands.Context) -> None:
         await ctx.send(embed=embed)
     except discord.HTTPException:
         await ctx.send("Current uptime: " + text)
+        
 
+@bot.command(case_insensitive = True, aliases = ["remind", "remindme", "remind_me"])
+async def reminder(ctx, time, *, reminder):
+    print(time)
+    print(reminder)
+    user = ctx.message.author
+    embed = discord.Embed(datetime.datetime.utcnow())
+    embed.set_footer(text="If you have any questions, suggestions or bug reports, please join our support Discord Server: link hidden", icon_url=f"{client.user.avatar_url}")
+    seconds = 0
+    if reminder is None:
+        embed.add_field(name='Warning', value='Please specify what do you want me to remind you about.') # Error message
+    if time.lower().endswith("d"):
+        seconds += int(time[:-1]) * 60 * 60 * 24
+        counter = f"{seconds // 60 // 60 // 24} days"
+    if time.lower().endswith("h"):
+        seconds += int(time[:-1]) * 60 * 60
+        counter = f"{seconds // 60 // 60} hours"
+    elif time.lower().endswith("m"):
+        seconds += int(time[:-1]) * 60
+        counter = f"{seconds // 60} minutes"
+    elif time.lower().endswith("s"):
+        seconds += int(time[:-1])
+        counter = f"{seconds} seconds"
+    if seconds == 0:
+        embed.add_field(name='Warning',
+                        value='use a proper value wtf.')
+    elif seconds < 300:
+        embed.add_field(name='Warning',
+                        value='no')
+    elif seconds > 7776000:
+        embed.add_field(name='Warning', value='no')
+    else:
+        await ctx.send(f"ok i will remind you {reminder} in {counter}.")
+        await asyncio.sleep(seconds)
+        await ctx.send(f"Hi Fuck you, you asked me to remind you about {reminder} {counter} ago.")
+        return
+    await ctx.send(embed=embed)
 
 @bot.command(name="exec",aliases=["eval"])
 @commands.is_owner()
@@ -159,7 +198,7 @@ async def _exec(ctx: commands.Context, *, code: CodeBlock) -> None:
 async def main() -> None:
     async with bot:
         setup_logging()
-        await bot.start("OTk0NjIxMjg3Mjg2NzE4NTA0.G5iJbP.bSWeqPsVkevDttpOUEbvakLygrsukxcpsVhuzY")
+        await bot.start("use your own token smh")
 
 
 asyncio.run(main())
